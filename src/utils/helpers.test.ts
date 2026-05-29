@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { formatTemperature } from "./helpers";
+import { formatTemperature, getWeatherInfo } from "./helpers";
 
 describe("formatTemperature", () => {
   it("rounds down a number correctly and adds the unit", () => {
@@ -16,5 +16,25 @@ describe("formatTemperature", () => {
 
   it("handles exact zero correctly", () => {
     expect(formatTemperature(0)).toBe("0 °C");
+  });
+});
+
+describe("getWeatherInfo", () => {
+  it("returns correct info for code 0 (Clear)", () => {
+    const info = getWeatherInfo(0);
+    expect(info.description).toBe("Jasno");
+    expect(info.icon).toBe("☀️");
+  });
+
+  it("returns correct info for code 61 (Rain)", () => {
+    const info = getWeatherInfo(61);
+    expect(info.description).toBe("Déšť");
+    expect(info.icon).toBe("🌧️");
+  });
+
+  it("returns default info for unknown code", () => {
+    const info = getWeatherInfo(-99);
+    expect(info.description).toBe("Neznámé počasí");
+    expect(info.icon).toBe("❓");
   });
 });
