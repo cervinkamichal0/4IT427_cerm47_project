@@ -1,5 +1,6 @@
 import { SearchBar } from "../components/SearchBar";
 import { useWeather } from "../hooks/useWeather";
+import { formatTemperature } from "../utils/helpers";
 
 export function Home() {
   const { data, isLoading, error, fetchWeather } = useWeather();
@@ -20,7 +21,7 @@ export function Home() {
         <div className="weather-result">
           <h3>{data.cityName}</h3>
           <p>
-            Teplota: <strong>{data.temperature} °C</strong>
+            Teplota: <strong>{formatTemperature(data.temperature)}</strong>
           </p>
           <p>Vlhkost: {data.humidity} %</p>
         </div>
