@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
+import { WeatherPreview } from "../components/WeatherPreview"; // <-- Nový import
 import { useWeather } from "../hooks/useWeather";
-import { formatTemperature } from "../utils/helpers";
 
 export function Home() {
   const { data, isLoading, error, fetchWeather } = useWeather();
@@ -9,7 +8,7 @@ export function Home() {
   return (
     <div className="home-page">
       <h2>Hledat počasí</h2>
-      
+
       <SearchBar onSearch={fetchWeather} isLoading={isLoading} />
 
       {error && (
@@ -18,16 +17,8 @@ export function Home() {
         </div>
       )}
 
-      {data && !isLoading && (
-        <div className="weather-preview">
-          <h3>{data.cityName}</h3>
-          <p>Aktuálně: <strong>{formatTemperature(data.temperature)}</strong></p>
-          
-          <Link to={`/weather/${data.cityName}`} className="detail-link">
-            Zobrazit detail a předpověď na dalších 5 dní &rarr;
-          </Link>
-        </div>
-      )}
+      {/* Zde jsme původní HTML nahradili naší novou komponentou */}
+      {data && !isLoading && <WeatherPreview data={data} />}
     </div>
   );
 }
