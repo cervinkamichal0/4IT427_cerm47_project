@@ -1,31 +1,20 @@
+import { useNavigate } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
-import { useWeather } from "../hooks/useWeather";
-import { formatTemperature } from "../utils/helpers";
 
 export function Home() {
-  const { data, isLoading, error, fetchWeather } = useWeather();
+  const navigate = useNavigate();
+
+  const handleSearch = (cityName: string) => {
+    navigate(`/weather/${cityName}`);
+  };
 
   return (
     <div className="home-page">
       <h2>Hledat počasí</h2>
 
-      <SearchBar onSearch={fetchWeather} isLoading={isLoading} />
+      <p>Zadejte název města pro zobrazení aktuální předpovědi.</p>
 
-      {error && (
-        <div className="error-message">
-          <strong>Chyba:</strong> {error}
-        </div>
-      )}
-
-      {data && (
-        <div className="weather-result">
-          <h3>{data.cityName}</h3>
-          <p>
-            Teplota: <strong>{formatTemperature(data.temperature)}</strong>
-          </p>
-          <p>Vlhkost: {data.humidity} %</p>
-        </div>
-      )}
+      <SearchBar onSearch={handleSearch} isLoading={false} />
     </div>
   );
 }
